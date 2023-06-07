@@ -4,7 +4,9 @@ import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-
+import { getServerSession } from "next-auth/next"
+// import { getSession } from "next-auth/client"
+// import { authOptions } from './api/auth/[...nextauth]'
 
 export default function Home({ allPostsData }) {
   const { data: session } = useSession()
@@ -14,7 +16,8 @@ export default function Home({ allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        {session ? (
+      <p>Click <Link href="/api/hello">here</Link> to see the JSON at <em>api/hello</em></p>
+      {/* {session ? (
           <p>Click <Link href="/api/hello">here</Link> to see the JSON at <em>api/hello</em></p>
         ) : (
           <>
@@ -22,18 +25,37 @@ export default function Home({ allPostsData }) {
           <Link href="/login">Log in</Link> or {''}
           <Link href="/signup">Sign up</Link>
           </>
-        )}
-        
+        )} */}
       </section>
     </Layout>
   )
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const allPostsData = getSortedPostsData()
+//   return {
+//     props: {
+//       allPostsData
+//     }
+//   }
+// }
+
+// export async function getServerSideProps({context }) {
+//   const allPostsData = getSortedPostsData()
+//   return {
+//     props: {
+//       session: await getSession(context), 
+//       allPostsData,
+//     }
+//   }
+// }
+
+export async function getServerSideProps({req, res}) {
   const allPostsData = getSortedPostsData()
   return {
     props: {
-      allPostsData
+      session: await getServerSession(req, res), 
+      allPostsData,
     }
   }
 }
