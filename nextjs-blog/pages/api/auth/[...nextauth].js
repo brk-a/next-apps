@@ -1,56 +1,39 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = {
+  export const authOptions = {
+    // session: {
+    //   strategy: "jwt",
+    //   maxAge: 60 * 60, //3600s
+    //   updateAge: 60 * 60,
+    //   generateSessionToken: () => {
+    //     return randomUUID?.() ?? randomBytes(32).toString("hex")
+    //   },
+    // },
     providers: [
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {
-                username: { label: "Username", type: "text", placeholder: "fnjakai" },
-                password: { label: "Password", type: "password" }
-            },
-            async authorize(credentials, req) {
-                const user = { id: "1", name: "F Njakai", email: "fnjakai@example.com" }
-                if (user) {
-                    
-                    return user
-                } else {
-                    return null
-                }
-            }
-        }),
+      CredentialsProvider({
+          name: "Credentials",
+          credentials: {
+              username: { label: "Username", type: "text", placeholder: "your name" },
+              // email: {label: "email", type: "text", placeholder: "your email"},
+              password: { label: "Password", type: "password", placeholder: "password" },
+          },
+          async authorize(credentials, req) {
+              const user = { id: "1", name: "fnjakai", username: "fnjakai", password: "password123" }
+              if (
+                // user.username === req.body.username && 
+                // user.password === req.body.password
+                user.username === credentials.username && 
+                user.password === credentials.password
+                ) {
+                  console.log(user);
+                  return user
+              } else {
+                  return null
+              }
+          }
+      }),
     ],
-    callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-            const isAllowedToSignIn = true
-            if (isAllowedToSignIn) {
-              return true
-            } else {
-              // Return false to display a default error message
-              return false
-              // Or you can return a URL to redirect to:
-              // return '/unauthorized'
-            }
-          },
-          async redirect({ url, baseUrl }) {
-            // Allows relative callback URLs
-            if (url.startsWith("/")) return `${baseUrl}${url}`
-            // Allows callback URLs on the same origin
-            else if (new URL(url).origin === baseUrl) return url
-            return baseUrl
-          },
-          async session({ session, user, token }) {
-            return session
-          },
-          async jwt({ token, account, profile }) {
-            // Persist the OAuth access_token and or the user id to the token right after signin
-            if (account) {
-              token.accessToken = account.access_token
-              token.id = profile.id
-            }
-            return token
-          },
-    },
-}
+    }
 
-export default NextAuth(authOptions)
+    export default NextAuth(authOptions)

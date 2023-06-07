@@ -1,19 +1,33 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function LoginOut() {
+
   const { data: session } = useSession()
+  console.log(session);
+
+  const handleSignIn = (e) => {
+    e.preventDefault()
+    signIn()
+  }
+  const handleSignOut = (e) => {
+    e.preventDefault()
+    signOut()
+  }
+
   if (session) {
     return (
       <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        Signed in as {session.user.username} <br />
+        {/* <p>Click <Link href="/api/hello">here</Link> to see the JSON at <em>api/hello</em></p> */}
+        <button onClick={handleSignOut}>Sign out</button>
       </>
     )
   }
+  
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={handleSignIn}>Sign in</button>
     </>
   )
 }
