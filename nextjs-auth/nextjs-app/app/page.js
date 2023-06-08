@@ -11,7 +11,8 @@ export default function Component() {
         <h1>Hello, {session.user.name}!</h1> <br/>
         {/* Signed in as {session.user.name} <br /> */}
         <img src="/jaguar-dive.jpg" alt="jaguar-dive"/>
-        <p>click  <Link href="/api/hello">here</Link> to see the JSON ant <em>api/hello</em></p>
+        <p>click  <Link href="/api/hello">here</Link> to see the JSON at <em>api/hello</em></p>
+        <p>click  <Link href="/api/at">here</Link> to see SMSs at <em>api/at</em></p>
         <button onClick={() => signOut()}>Sign out</button>
         </div>
       </>
