@@ -30,7 +30,7 @@ async function sendSMS(){
         result = await axios.post(`${baseURL}/messaging`, configs)
             .then(res => {
                 console.log(res)
-                return res
+                // return res
             })
         return result
     } catch (error) {
@@ -38,12 +38,17 @@ async function sendSMS(){
     }
 }
 
+const handleSendSMS = (e) => {
+    e.preventDefault()
+    sendSMS()
+}
+
 export default function at() {
    return(
     <>
     <div>
         <h1>Africa's Talking</h1>
-        <button onClick={() => sendSMS()}>send messages</button>
+        <button type='submit' onClick={() => {handleSendSMS}}>send messages</button>
         <p>open console to view texts</p>
     </div>
     </>
