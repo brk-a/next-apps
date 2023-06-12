@@ -48,7 +48,7 @@ export default function at() {
     <>
     <div>
         <h1>Africa's Talking</h1>
-        <button type='submit' onClick={() => {handleSendSMS}}>send messages</button>
+        <button type='submit' onClick={handleSendSMS}>send messages</button>
         <p>open console to view texts</p>
     </div>
     </>
