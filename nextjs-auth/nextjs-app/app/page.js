@@ -1,9 +1,12 @@
 "use client"
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link"
+import SendSMSForm from './sendSMSForm';
+// import { sendSMS } from "@/pages/api/at"
 
 export default function Component() {
   const { data: session } = useSession()
+
   if (session) {
     return (
       <>
@@ -12,7 +15,9 @@ export default function Component() {
         {/* Signed in as {session.user.name} <br /> */}
         <img src="/jaguar-dive.jpg" alt="jaguar-dive"/>
         <p>click  <Link href="/api/hello">here</Link> to see the JSON at <em>api/hello</em></p>
-        <p>click  <Link href="/api/at">here</Link> to see SMSs at <em>api/at</em></p>
+        {/* <p>click  <Link href="/api/at">here</Link> to see SMSs at <em>api/at</em></p> */}
+        {/* <button onClick={() => sendSMS()}>Send SMS</button> */}
+        <SendSMSForm/>
         <button onClick={() => signOut()}>Sign out</button>
         </div>
       </>

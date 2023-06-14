@@ -1,59 +1,148 @@
 "use client"
 import axios from 'axios'
+// import at from './sendSMS'
 
-const baseURL = 'https://api.sandbox.africastalking.com/version1'
+const baseURL = 'https://api.sandbox.africastalking.com/version1/'
+const username = 'sandbox'
+const accept = 'application/json'
+const message = "Test message"
+const apiKey = process.env.apiKey
+const to = process.env.to
+
 const configs = {
     headers: {
-    apiKey: process.env.apiKey,
-    Accept: 'application/json',
+    apiKey: apiKey,
+    Accept: accept,
+    'Access-Control-Allow-Origin': '*', //for CORS
+    'Content-Type': 'application/json',
     },
     params: {
-        username: 'sandbox',
-    },
-    data: {
-        username: 'sandbox',
-        to: process.env.to,
-        message: "Test message",
+        username: username,
     },
 }
 
-async function sendSMS(){
-    // const configs = {
-    //     ...configs,
-    //     data: {
-    //         username: 'sandbox',
-    //         to: process.env.to,
-    //         message: "Test message"
-    //     },
-    // }
+const data = [
+    {
+        username: username,
+        to: to,
+        message: message,   
+    },
+]
+
+const options = {
+    method: 'POST',
+    headers: {
+        apiKey: apiKey,
+        Accept: accept,
+        'Access-Control-Allow-Origin': '*', //for CORS
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(
+        {
+            username: username,
+            to: to,
+            message: message,   
+        },
+    ),
+}
+
+export const sendSMS = async() => {
     try {
-        result = await axios.post(`${baseURL}/messaging`, configs)
-            .then(res => {
-                console.log(res)
-                // return res
-            })
-        return result
+        await axios.post(`${baseURL}messaging`, data, configs)
+        .then(res => {
+            console.log({'sendSMS response': res})
+        })
     } catch (error) {
-        console.log(error)
+        console.log({'sendSMS error': error})
     }
 }
 
-const handleSendSMS = (e) => {
-    e.preventDefault()
-    sendSMS()
-}
+// export const sendSMS = () => {
+//     fetch(`${baseURL}messaging`, options)
+//     .then(res => {
+//         if (!res.ok){
+//             throw new Error({'resNotOkay error: ': res.status})
+//         }
+//         return res.json()
+//     })
+//     .then(sms => {
+//         console.log({'sendSMS success: ': sms});
+//     })
+//     .catch(err => {
+//         console.log({'sendSMS error: ': err});
+//     })
+// }
 
-export default function at() {
-   return(
-    <>
-    <div>
-        <h1>Africa's Talking</h1>
-        <button type='submit' onClick={handleSendSMS}>send messages</button>
-        <p>open console to view texts</p>
-    </div>
-    </>
-   )
-}
+
+// export default async function sendSMS(req, res){
+//     const {recipient, message} = req.body
+//     try{
+//         const sms = at.SMS
+//         const response = await sms.send({
+//             to: recipient,
+//             message: message,
+//         })
+//         console.log(response)
+//         res.status(200).json({text: 'Success'})
+//     }catch{(err) => {
+//         console.log(err)
+//         res.status(500).json({text: 'Message not sent'})
+//     }}
+// } 
+
+
+// const baseURL = 'https://api.sandbox.africastalking.com/version1'
+// // const configs = {
+// //     headers: {
+// //     apiKey: process.env.apiKey,
+// //     Accept: 'application/json',
+// //     },
+// //     params: {
+// //         username: 'sandbox',
+// //     },
+// //     // data: {
+// //     //     username: 'sandbox',
+// //     //     to: process.env.to,
+// //     //     message: "Test message",
+// //     // },
+// // }
+
+// async function sendSMS(){
+//     const data = [
+//         {
+//             username: 'sandbox',
+//             to: process.env.to,
+//             message: "Test message",
+//     },
+// ]
+//     try {
+//         result = await axios.post(`${baseURL}/messaging`, data, configs)
+//             .then(res => {
+//                 console.log(res)
+//                 // return res
+//             })
+//         return result
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// const handleSendSMS = (e) => {
+//     e.preventDefault()
+//     sendSMS()
+// }
+
+// export default function at() {
+//    return(
+//     <>
+//     <div>
+//         <h1>Africa's Talking</h1>
+//         <button type='submit' onClick={handleSendSMS}>send messages</button>
+//         <p>open console to view texts</p>
+//     </div>
+//     </>
+//    )
+// }
 
 /**
  * TEST WHETHER THE API RESPONDS
