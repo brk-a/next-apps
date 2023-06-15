@@ -1,8 +1,9 @@
 "use client"
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link"
-import SendSMSForm from './sendSMSForm';
-// import { sendSMS } from "@/pages/api/at"
+// import SendSMSForm from './sendSMSForm';
+// import SendCSVForm from "./sendCSVForm"
+import SfcSTK from "./sfcSTK"
 
 export default function Component() {
   const { data: session } = useSession()
@@ -17,7 +18,9 @@ export default function Component() {
         <p>click  <Link href="/api/hello">here</Link> to see the JSON at <em>api/hello</em></p>
         {/* <p>click  <Link href="/api/at">here</Link> to see SMSs at <em>api/at</em></p> */}
         {/* <button onClick={() => sendSMS()}>Send SMS</button> */}
-        <SendSMSForm/>
+        {/* <SendSMSForm/> */}
+        {/* <SendCSVForm/> */}
+        <SfcSTK/>
         <button onClick={() => signOut()}>Sign out</button>
         </div>
       </>
@@ -26,7 +29,7 @@ export default function Component() {
   return (
     <>
     <div>
-      Not signed in <br />
+      <h1>Not signed in </h1> <br />
       <button onClick={() => signIn()}>Sign in</button>
     </div>
     </>

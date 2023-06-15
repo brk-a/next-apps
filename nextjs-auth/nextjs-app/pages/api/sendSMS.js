@@ -1,7 +1,6 @@
-// import database from '@/app/database';
-
-
 import client from '@/database';
+
+
 const africastalking = require('africastalking');
 
 const apiKey = process.env.apiKey
