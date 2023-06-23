@@ -118,7 +118,7 @@ img{
   padding: 20px;
 }
 button{
-  width: 80px;
+  min-width: 80px;
   border: none;
   border-radius: 10px;
   margin: 15px;
